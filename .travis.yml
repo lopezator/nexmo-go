@@ -1,0 +1,16 @@
+language: go
+go_import_path: github.com/lopzator/nexmo-go
+
+os: linux
+dist: stretch
+
+before_script:
+  - go get -u -t ./...
+
+script:
+  - make sanity-check
+  - make test
+
+cache:
+  directories:
+    - $GOPATH/pkg
