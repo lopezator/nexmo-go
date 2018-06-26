@@ -91,7 +91,7 @@ func (c *Client) MakeRequest(ctx context.Context, method string, pathPart string
 	if err != nil {
 		return err
 	}
-	req = withContext(ctx, req)
+	req = req.WithContext(ctx)
 	if ua := req.Header.Get("User-Agent"); ua == "" {
 		req.Header.Set("User-Agent", userAgent)
 	} else {
