@@ -8,6 +8,7 @@ before_script:
   - go get -u -t ./...
 
 script:
+  - make prepare
   - make sanity-check
   - make test
 
