@@ -32,11 +32,14 @@ type Message struct {
 func (m *MessageService) Create(ctx context.Context, data url.Values) (*Message, error) {
 	msg := new(Message)
 	err := m.client.CreateResource(ctx, messagesPathPart, data, msg)
+	if err != nil {
+		return nil, err
+	}
 	// TODO(lopezator) nexmo returning 200 OK and message response but status != 0 on some errors
 	// Suggestions to handle this better are welcome
 	// https://developer.nexmo.com/api/sms#errors
 	if msg.Messages[0].Status != "0" {
-		return nil, fmt.Errorf("an error ocurred %s", msg.Messages[0].ErrorText)
+		return nil, fmt.Errorf("an error occurred %s", msg.Messages[0].ErrorText)
 	}
 
 	return msg, err
