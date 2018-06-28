@@ -21,14 +21,18 @@ $> cd $GOPATH/src/lopezator/nexmo-go
 $> make install
 ```
 
-# Send a SMS
+# Usage
+
+nexmo-go is pretty straightforward to use, anyway, you can find some examples ready to run in the [examples/](https://github.com/lopezator/nexmo-go/tree/master/examples) folder in addition to usage info below.
+
+## Send a SMS
 
 ```
 const apiKey = "my-api-key"
 const apiSecret = "my-api-secret"
 
 // Create a client
-client := NewClient(apiKey, apiSecret, nil)
+client := nexmo.NewClient(apiKey, apiSecret, nil)
 
 // Send a message
 // Nexmo allows to use your either a random text as `from` value or your nexmo phone
@@ -36,14 +40,14 @@ msg, err := client.Messages.SendMessage("ME", "+34666666666", "Message sent via 
 ```
 
 
-# Make a TTS Call
+## Make a TTS Call
 
 ```
 const apiKey = "my-api-key"
 const apiSecret = "my-api-secret"
 
 // Create a client
-client := NewClient(apiKey, apiSecret, nil)
+client := nexmo.NewClient(apiKey, apiSecret, nil)
 
 // Make a TTS call
 msg, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go")
