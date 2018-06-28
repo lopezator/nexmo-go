@@ -6,7 +6,7 @@ import (
 	"net/url"
 )
 
-const messagesPathPart = "sms/json"
+const messagesPathPart = "/sms/json"
 
 // MessageService is the client holding messaging capatibilites
 type MessageService struct {
@@ -30,7 +30,7 @@ type Message struct {
 
 // Create creates a message resource
 func (m *MessageService) Create(ctx context.Context, data url.Values) (*Message, error) {
-	msg := new(Message)
+	msg := &Message{}
 	err := m.client.CreateResource(ctx, messagesPathPart, data, msg)
 	if err != nil {
 		return nil, err

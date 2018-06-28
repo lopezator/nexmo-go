@@ -5,13 +5,13 @@
 
 # nexmo-go
 
-WIP Nexmo REST API client for Go.
+Nexmo REST API client for Go.
 
 Hugely inspired by: https://github.com/kevinburke/twilio-go
 
-As it's a WIP it only supports message sending by now.
+As it's a WIP it only supports SMS and TTS Call sending by now.
 
-# Usage
+# Send a SMS
 
 ```
 const apiKey = "my-api-key"
@@ -21,7 +21,20 @@ const apiSecret = "my-api-secret"
 client := NewClient(apiKey, apiSecret, nil)
 
 // Send a message
-msg, err := client.Messages.SendMessage("ME", "+34666666666", "Sent via nexmo-go")
+// Nexmo allows to use your either a random text as `from` value or your nexmo phone
+msg, err := client.Messages.SendMessage("ME", "+34666666666", "Message sent via nexmo-go")
 ```
 
 
+# Make a TTS Call
+
+```
+const apiKey = "my-api-key"
+const apiSecret = "my-api-secret"
+
+// Create a client
+client := NewClient(apiKey, apiSecret, nil)
+
+// Make a TTS call
+msg, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go")
+```

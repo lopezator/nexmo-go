@@ -51,6 +51,7 @@ func getServer(response []byte) (*Client, *Server) {
 	s := newServer(response, 200)
 	client := NewClient("AC123", "456", nil)
 	client.Base = s.URL
+	client.Messages.client.Base = s.URL
 
 	return client, s
 }
@@ -71,5 +72,14 @@ var sendMessageResponse = []byte(`
 }
 `)
 
-const from = "19253920364"
-const to = "19253920364"
+var sendCallResponse = []byte(`
+{
+	"call_id": "12abcdef111e1b3b4c5g4e23f1c222",
+	"to": "34666666666",
+	"status": "0",
+	"error_text": "Success"
+}
+`)
+
+const from = "11111111111"
+const to = "11111111111"

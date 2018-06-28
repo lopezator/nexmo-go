@@ -13,9 +13,8 @@ import (
 // Version of the program
 const Version = "0.1"
 const userAgent = "nexmo-go/" + Version
-
-// BaseURL serving the API. Override this for testing.
-var BaseURL = "https://rest.nexmo.com"
+const baseURL = "https://api.nexmo.com"
+const messageBaseURL = "https://rest.nexmo.com"
 
 // Client holds all the necessary data to handle nexmo API
 type Client struct {
@@ -24,34 +23,27 @@ type Client struct {
 	APIKey    string
 	APISecret string
 
-	// FullPath takes a path part (e.g. "Messages") and
-	// returns the full API path, including the version (e.g.
-	// "/sms").
+	// FullPath takes a path part (e.g. "Messages") and returns the full API path, including the version (e.g. "/sms").
 	FullPath func(pathPart string) string
 
 	// The API Client uses these resources
 	Messages *MessageService
+	Calls    *CallService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
-
-var defaultHTTPClient *http.Client
-
-func init() {
-	defaultHTTPClient = &http.Client{
-		Timeout:   defaultTimeout,
-		Transport: rest.DefaultTransport,
-	}
-}
 
 // NewClient creates a Client for interacting with the Nexmo API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
 func NewClient(apiKey string, apiSecret string, httpClient *http.Client) *Client {
 	if httpClient == nil {
-		httpClient = defaultHTTPClient
+		httpClient = &http.Client{
+			Timeout:   defaultTimeout,
+			Transport: rest.DefaultTransport,
+		}
 	}
-	restClient := rest.NewClient("", "", BaseURL)
+	restClient := rest.NewClient("", "", baseURL)
 	restClient.Client = httpClient
 	restClient.UploadType = rest.FormURLEncoded
 
@@ -60,12 +52,32 @@ func NewClient(apiKey string, apiSecret string, httpClient *http.Client) *Client
 		return "/" + pathPart
 	}
 
-	c.Messages = &MessageService{client: c}
+	c.Messages = &MessageService{client: newClient(messageBaseURL, apiKey, apiSecret, httpClient)}
+	c.Calls = &CallService{client: c}
 
 	return c
 }
 
-// TODO(david.lopez) functions took from: https://github.com/kevinburke/twilio-go/blob/master/http.go
+func newClient(baseURL, apiKey, apiSecret string, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{
+			Timeout:   defaultTimeout,
+			Transport: rest.DefaultTransport,
+		}
+	}
+	restClient := rest.NewClient("", "", baseURL)
+	restClient.Client = httpClient
+	restClient.UploadType = rest.FormURLEncoded
+
+	c := &Client{Client: restClient, APIKey: apiKey, APISecret: apiSecret}
+	c.FullPath = func(pathPart string) string {
+		return "/" + pathPart
+	}
+
+	return c
+}
+
+// TODO(lopezator) functions took from: https://github.com/kevinburke/twilio-go/blob/master/http.go
 // Add GetResource, UpdateResource, DeleteResource... as needed
 
 // CreateResource handles POST requests
@@ -80,6 +92,7 @@ func (c *Client) MakeRequest(ctx context.Context, method string, pathPart string
 	if !strings.HasPrefix(pathPart, "/") {
 		pathPart = c.FullPath(pathPart)
 	}
+
 	rb := new(strings.Reader)
 	if data != nil && (method == "POST" || method == "PUT") {
 		rb = strings.NewReader(data.Encode())
