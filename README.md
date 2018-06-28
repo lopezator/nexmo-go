@@ -11,6 +11,16 @@ Hugely inspired by: https://github.com/kevinburke/twilio-go
 
 As it's a WIP it only supports SMS and TTS Call sending by now.
 
+# Install
+
+Assuming you have your [$GOPATH set](https://github.com/golang/go/wiki/SettingGOPATH):
+
+```
+$> go get github.com/lopezator/nexmo-go
+$> cd $GOPATH/src/lopezator/nexmo-go
+$> make install
+```
+
 # Send a SMS
 
 ```

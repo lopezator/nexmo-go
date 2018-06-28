@@ -19,6 +19,11 @@ clean:
 		rm -f cmd/$$app/*-linux-amd64; \
 	done
 
+.PHONY: install
+install:
+	@echo "Installing nexmo-go dependencies into your GOPATH..."
+	@go get ./...
+
 .PHONY: sanity-check
 sanity-check: goimports golint vet megacheck errcheck
 
