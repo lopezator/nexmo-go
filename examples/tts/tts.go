@@ -15,7 +15,7 @@ func main() {
 	client := nexmo.NewClient(apiKey, apiSecret, nil)
 
 	// Make a tts call
-	_, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go")
+	_, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go", "5")
 	if err != nil {
 		log.Fatalf("couldn't make the tts call using nexmo-go: %v", err)
 	}

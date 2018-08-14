@@ -50,5 +50,5 @@ const apiSecret = "my-api-secret"
 client := nexmo.NewClient(apiKey, apiSecret, nil)
 
 // Make a TTS call
-msg, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go")
+msg, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go", "5")
 ```

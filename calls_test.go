@@ -8,7 +8,7 @@ func TestSendCall(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(sendCallResponse)
 	defer s.Close()
-	call, err := client.Calls.MakeTTSCall("", "", "nexmo-go testing!")
+	call, err := client.Calls.MakeTTSCall("", "", "nexmo-go testing!", "1")
 	if err != nil {
 		t.Fatal(err)
 	}

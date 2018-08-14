@@ -38,11 +38,12 @@ func (c *CallService) Create(ctx context.Context, data url.Values) (*Call, error
 }
 
 // MakeTTSCall makes an outbound Call reproducing using TTS with the given text.
-func (c *CallService) MakeTTSCall(from string, to string, text string) (*Call, error) {
+func (c *CallService) MakeTTSCall(from string, to string, text string, repeat string) (*Call, error) {
 	v := url.Values{}
 	v.Set("text", text)
 	v.Set("from", from)
 	v.Set("to", to)
+	v.Set("repeat", repeat)
 
 	return c.Create(context.Background(), v)
 }
