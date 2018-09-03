@@ -35,8 +35,8 @@ const apiSecret = "my-api-secret"
 client := nexmo.NewClient(apiKey, apiSecret, nil)
 
 // Send a message
-// Nexmo allows to use your either a random text as `from` value or your nexmo phone
-msg, err := client.Messages.SendMessage("ME", "+34666666666", "Message sent via nexmo-go")
+// Nexmo allows to use your either a random text as `from` value or your nexmo phone with country code but without "+" or "00" prefix
+msg, err := client.Messages.SendMessage("ME", "34666666666", "Message sent via nexmo-go")
 ```
 
 
@@ -50,5 +50,5 @@ const apiSecret = "my-api-secret"
 client := nexmo.NewClient(apiKey, apiSecret, nil)
 
 // Make a TTS call
-msg, err := client.Calls.MakeTTSCall("+15111111111", "+34666666666", "TTS call sent via nexmo-go", "5")
+msg, err := client.Calls.MakeTTSCall("15111111111", "34666666666", "TTS call sent via nexmo-go", "5")
 ```

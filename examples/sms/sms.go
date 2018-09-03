@@ -16,7 +16,7 @@ func main() {
 
 	// Send a message
 	// Nexmo allows to use your either a random text as `from` value or your nexmo phone
-	_, err := client.Messages.SendMessage("ME", "+34666666666", "Message sent via nexmo-go")
+	_, err := client.Messages.SendMessage("ME", "34666666666", "Message sent via nexmo-go")
 	if err != nil {
 		log.Fatalf("couldn't send the message using nexmo-go: %v", err)
 	}
