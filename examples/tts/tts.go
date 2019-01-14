@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/lopezator/nexmo-go"
+	nexmo "github.com/lopezator/nexmo-go"
 )
 
 func main() {
